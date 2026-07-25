@@ -1,0 +1,10 @@
+id: mbe-electrics
+name: MBE Electrics
+version: ${version}
+api: 1
+main: dev.darkblade.mbe.electrics.ElectricsAddon
+dependencies:
+  - mbe-wiring
+capabilities:
+  - mbe-core:electrics
+  - mbe-core:wiring

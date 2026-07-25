@@ -1,0 +1,21 @@
+id: "mbe-electrics:electric_furnace"
+version: "1.0.0"
+display-name: "&bElectric Furnace"
+assembly-trigger: WRENCH_USE
+persistent: true
+tick-interval: 20
+
+pattern:
+  - block: BLAST_FURNACE
+    x: 0
+    y: 0
+    z: 0
+
+controller:
+  x: 0
+  y: 0
+  z: 0
+  block: BLAST_FURNACE
+
+default-variables:
+  smelt_progress: 0

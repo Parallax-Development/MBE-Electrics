@@ -1,0 +1,62 @@
+id: "mbe-electrics:battery_3x3"
+version: "1.0.0"
+display-name: "&eBattery Box 3x3"
+assembly-trigger: WRENCH_USE
+persistent: true
+tick-interval: 20
+default-variables:
+  energy: 0
+controller: TERRACOTTA
+pattern:
+  - offset: [-1, 0, 0]
+    match: TERRACOTTA
+  - offset: [-1, 0, 1]
+    match: TERRACOTTA
+  - offset: [-1, 0, 2]
+    match: TERRACOTTA
+  - offset: [0, 0, 1]
+    match: TERRACOTTA
+  - offset: [0, 0, 2]
+    match: TERRACOTTA
+  - offset: [1, 0, 0]
+    match: TERRACOTTA
+  - offset: [1, 0, 1]
+    match: TERRACOTTA
+  - offset: [1, 0, 2]
+    match: TERRACOTTA
+  - offset: [-1, 1, 0]
+    match: TERRACOTTA
+  - offset: [-1, 1, 1]
+    match: "minecraft:observer[facing=east,powered=false]"
+  - offset: [-1, 1, 2]
+    match: TERRACOTTA
+  - offset: [0, 1, 0]
+    match: "minecraft:observer[facing=south,powered=false]"
+  - offset: [0, 1, 1]
+    match: REDSTONE_BLOCK
+  - offset: [0, 1, 2]
+    match: "minecraft:observer[facing=north,powered=false]"
+  - offset: [1, 1, 0]
+    match: TERRACOTTA
+  - offset: [1, 1, 1]
+    match: "minecraft:observer[facing=west,powered=false]"
+  - offset: [1, 1, 2]
+    match: TERRACOTTA
+  - offset: [-1, 2, 0]
+    match: TERRACOTTA
+  - offset: [-1, 2, 1]
+    match: TERRACOTTA
+  - offset: [-1, 2, 2]
+    match: TERRACOTTA
+  - offset: [0, 2, 0]
+    match: TERRACOTTA
+  - offset: [0, 2, 1]
+    match: "minecraft:target[power=0]"
+  - offset: [0, 2, 2]
+    match: TERRACOTTA
+  - offset: [1, 2, 0]
+    match: TERRACOTTA
+  - offset: [1, 2, 1]
+    match: TERRACOTTA
+  - offset: [1, 2, 2]
+    match: TERRACOTTA
