@@ -7,10 +7,10 @@ group = 'dev.darkblade.mbe.electrics'
 version = '1.0.0'
 
 dependencies {
-    compileOnly 'com.github.Parallax-Development:MultiBlockEngine:dev-SNAPSHOT'
+    compileOnly project(':api')
     compileOnly 'org.spigotmc:spigot-api:1.20.4-R0.1-SNAPSHOT'
     compileOnly "org.jetbrains:annotations:24.0.0"
-    compileOnly 'dev.darkblade.mbe.wiring:mbe-wiring:1.1.0'
+    compileOnly project(':addons:mbe-wiring')
 }
 
 processResources {
