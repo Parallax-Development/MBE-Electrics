@@ -1,0 +1,19 @@
+type: inventory
+title: '&6Electric Forge'
+rows: 1
+inventory-lock: true
+items:
+  background:
+    material: GRAY_STAINED_GLASS_PANE
+    name: " "
+  status:
+    material: LAVA_BUCKET
+    name: '&cEstado del Horno'
+    lore:
+      - '&7Progreso: &f{{smelt_progress}}%'
+      - '&7Energía: &e{{energy}} / {{max_energy}} RF'
+layout:
+  fill:
+    - background
+  4:
+    - status

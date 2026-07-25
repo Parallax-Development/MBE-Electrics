@@ -1,0 +1,18 @@
+type: inventory
+title: '&8Coal Generator'
+rows: 1
+inventory-lock: true
+items:
+  background:
+    material: GRAY_STAINED_GLASS_PANE
+    name: " "
+  status:
+    material: COAL
+    name: '&aEstado del Generador'
+    lore:
+      - '&7Combustible: &f{{fuel_ticks}} ticks'
+layout:
+  fill:
+    - background
+  4:
+    - status

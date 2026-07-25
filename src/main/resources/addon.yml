@@ -5,6 +5,8 @@ api: 1
 main: dev.darkblade.mbe.electrics.ElectricsAddon
 dependencies:
   - mbe-wiring
+  - mbe-ui
 capabilities:
   - mbe-core:electrics
   - mbe-core:wiring
+  - mbe-core:ui

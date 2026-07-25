@@ -1,0 +1,66 @@
+id: "mbe-electrics:electric_forge"
+version: "1.0"
+display-name: "&6Electric Forge"
+assembly-trigger: WRENCH_USE
+persistent: true
+tick-interval: 20
+
+default-variables:
+  energy: 0
+  max_energy: 10000
+  smelt_progress: 0
+  
+controller: "minecraft:loom[facing=north]"
+pattern:
+  - offset: [-1, 0, 0]
+    match: NETHER_BRICKS
+  - offset: [-1, 0, 1]
+    match: NETHER_BRICKS
+  - offset: [-1, 0, 2]
+    match: "minecraft:nether_brick_wall[east=tall,north=tall,south=none,up=true,waterlogged=false,west=none]"
+  - offset: [0, 0, 1]
+    match: NETHER_BRICKS
+  - offset: [0, 0, 2]
+    match: "minecraft:target[power=0]"
+  - offset: [1, 0, 0]
+    match: NETHER_BRICKS
+  - offset: [1, 0, 1]
+    match: NETHER_BRICKS
+  - offset: [1, 0, 2]
+    match: "minecraft:nether_brick_wall[east=none,north=tall,south=none,up=true,waterlogged=false,west=tall]"
+  - offset: [-1, 1, 0]
+    match: "minecraft:blast_furnace[facing=north,lit=false]"
+  - offset: [-1, 1, 1]
+    match: NETHER_BRICKS
+  - offset: [-1, 1, 2]
+    match: "minecraft:nether_brick_wall[east=tall,north=tall,south=none,up=true,waterlogged=false,west=none]"
+  - offset: [0, 1, 0]
+    match: "minecraft:blast_furnace[facing=north,lit=false]"
+  - offset: [0, 1, 1]
+    match: REDSTONE_BLOCK
+  - offset: [0, 1, 2]
+    match: NETHER_BRICKS
+  - offset: [1, 1, 0]
+    match: "minecraft:blast_furnace[facing=north,lit=false]"
+  - offset: [1, 1, 1]
+    match: NETHER_BRICKS
+  - offset: [1, 1, 2]
+    match: "minecraft:nether_brick_wall[east=none,north=tall,south=none,up=true,waterlogged=false,west=tall]"
+  - offset: [-1, 2, 0]
+    match: NETHER_BRICKS
+  - offset: [-1, 2, 1]
+    match: NETHER_BRICKS
+  - offset: [-1, 2, 2]
+    match: NETHER_BRICKS
+  - offset: [0, 2, 0]
+    match: NETHER_BRICKS
+  - offset: [0, 2, 1]
+    match: "minecraft:waxed_copper_bulb[lit=true,powered=true]"
+  - offset: [0, 2, 2]
+    match: NETHER_BRICKS
+  - offset: [1, 2, 0]
+    match: NETHER_BRICKS
+  - offset: [1, 2, 1]
+    match: NETHER_BRICKS
+  - offset: [1, 2, 2]
+    match: NETHER_BRICKS
