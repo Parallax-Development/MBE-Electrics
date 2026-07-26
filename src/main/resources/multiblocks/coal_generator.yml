@@ -4,7 +4,7 @@ display-name: "&6Coal Generator"
 assembly-trigger: WRENCH_USE
 persistent: true
 tick-interval: 20
-default-variables:
+vaiables:
   fuel_ticks: 0
 controller: "minecraft:blast_furnace[facing=north,lit=false]"
 pattern:

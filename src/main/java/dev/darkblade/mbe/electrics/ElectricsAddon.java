@@ -35,11 +35,6 @@ public final class ElectricsAddon implements MultiblockAddon {
             context.saveResource("panels/coal_generator.yml", false);
             
             context.setMultiblockDirectory(context.getDataFolder().resolve("multiblocks"));
-            
-            java.nio.file.Path mbeUiPanels = context.getDataFolder().getParent().resolve("mbe-ui").resolve("panels");
-            java.nio.file.Files.createDirectories(mbeUiPanels);
-            java.nio.file.Files.copy(context.getDataFolder().resolve("panels/electric_forge.yml"), mbeUiPanels.resolve("electric_forge.yml"), java.nio.file.StandardCopyOption.REPLACE_EXISTING);
-            java.nio.file.Files.copy(context.getDataFolder().resolve("panels/coal_generator.yml"), mbeUiPanels.resolve("coal_generator.yml"), java.nio.file.StandardCopyOption.REPLACE_EXISTING);
         } catch (Exception e) {
             context.getLogger().warn("Failed to save default multiblock resources: " + e.getMessage());
         }
@@ -47,14 +42,24 @@ public final class ElectricsAddon implements MultiblockAddon {
 
     @Override
     public void onEnable() throws AddonException {
+        dev.darkblade.mbe.api.ui.PanelDirectoryRegistry dirRegistry = context.getService(dev.darkblade.mbe.api.ui.PanelDirectoryRegistry.class);
+        if (dirRegistry != null) {
+            dirRegistry.registerDirectory(context.getDataFolder().resolve("panels"));
+        }
+        
+        dev.darkblade.mbe.api.ui.PanelMappingRegistry mapRegistry = context.getService(dev.darkblade.mbe.api.ui.PanelMappingRegistry.class);
+        if (mapRegistry != null) {
+            mapRegistry.registerMapping("mbe-electrics:coal_generator", "coal_generator");
+            mapRegistry.registerMapping("mbe-electrics:electric_forge", "electric_forge");
+        }
+
         dev.darkblade.mbe.api.wiring.NetworkService networkService = context.getService(dev.darkblade.mbe.api.wiring.NetworkService.class);
         if (networkService != null) {
             dev.darkblade.mbe.electrics.service.ElectricsService electricsService = new dev.darkblade.mbe.electrics.service.ElectricsService(networkService);
             context.registerService(dev.darkblade.mbe.electrics.service.ElectricsService.class, electricsService);
             context.getLogger().info("ElectricsService registered");
 
-            dev.darkblade.mbe.api.ui.binding.PanelBindingLinkService linkService = context.getService(dev.darkblade.mbe.api.ui.binding.PanelBindingLinkService.class);
-            dev.darkblade.mbe.electrics.manager.ElectricsManager electricsManager = new dev.darkblade.mbe.electrics.manager.ElectricsManager(electricsService, networkService, linkService);
+            dev.darkblade.mbe.electrics.manager.ElectricsManager electricsManager = new dev.darkblade.mbe.electrics.manager.ElectricsManager(electricsService, networkService);
             context.registerListener(electricsManager);
 
             dev.darkblade.mbe.api.event.EventBusService eventBus = context.getService(dev.darkblade.mbe.api.event.EventBusService.class);

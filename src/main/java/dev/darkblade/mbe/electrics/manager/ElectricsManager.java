@@ -18,13 +18,11 @@ public class ElectricsManager implements Listener {
 
     private final ElectricsService electricsService;
     private final dev.darkblade.mbe.api.wiring.NetworkService networkService;
-    private final dev.darkblade.mbe.api.ui.binding.PanelBindingLinkService linkService;
     private final Set<Location> electricFurnaces = ConcurrentHashMap.newKeySet();
 
-    public ElectricsManager(ElectricsService electricsService, dev.darkblade.mbe.api.wiring.NetworkService networkService, dev.darkblade.mbe.api.ui.binding.PanelBindingLinkService linkService) {
+    public ElectricsManager(ElectricsService electricsService, dev.darkblade.mbe.api.wiring.NetworkService networkService) {
         this.electricsService = electricsService;
         this.networkService = networkService;
-        this.linkService = linkService;
     }
 
     @EventHandler
@@ -44,13 +42,6 @@ public class ElectricsManager implements Listener {
             if (anchor != null) {
                 if (typeId.equals("mbe-electrics:electric_forge")) {
                     electricFurnaces.add(anchor);
-                    if (linkService != null) {
-                        linkService.linkPanelToBlock("electric_forge", anchor.getBlock(), "click");
-                    }
-                } else if (typeId.equals("mbe-electrics:coal_generator")) {
-                    if (linkService != null) {
-                        linkService.linkPanelToBlock("coal_generator", anchor.getBlock(), "click");
-                    }
                 }
                 
                 electricsService.registerInstance(anchor, event.getMultiblock());

@@ -4,7 +4,7 @@ display-name: "&eBattery Box 5x5"
 assembly-trigger: WRENCH_USE
 persistent: true
 tick-interval: 20
-default-variables:
+vaiables:
   energy: 0
 controller: TERRACOTTA
 pattern:
