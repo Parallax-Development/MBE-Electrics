@@ -4,7 +4,7 @@ display-name: "&eBattery Box 5x5"
 assembly-trigger: WRENCH_USE
 persistent: true
 tick-interval: 20
-vaiables:
+variables:
   energy: 0
 controller: TERRACOTTA
 pattern:
@@ -256,3 +256,50 @@ pattern:
     match: TERRACOTTA
   - offset: [2, 4, 4]
     match: TERRACOTTA
+
+ports:
+  port_in_1:
+    direction: input
+    type: energy
+    block: [0, 4, 2]
+    capabilities: [accept]
+  port_out_1:
+    direction: output
+    type: energy
+    block: [-2, 1, 1]
+    capabilities: [emit]
+  port_out_2:
+    direction: output
+    type: energy
+    block: [-2, 1, 3]
+    capabilities: [emit]
+  port_out_3:
+    direction: output
+    type: energy
+    block: [-1, 1, 0]
+    capabilities: [emit]
+  port_out_4:
+    direction: output
+    type: energy
+    block: [-1, 1, 4]
+    capabilities: [emit]
+  port_out_5:
+    direction: output
+    type: energy
+    block: [1, 1, 0]
+    capabilities: [emit]
+  port_out_6:
+    direction: output
+    type: energy
+    block: [1, 1, 4]
+    capabilities: [emit]
+  port_out_7:
+    direction: output
+    type: energy
+    block: [2, 1, 1]
+    capabilities: [emit]
+  port_out_8:
+    direction: output
+    type: energy
+    block: [2, 1, 3]
+    capabilities: [emit]

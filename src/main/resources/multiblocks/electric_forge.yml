@@ -5,7 +5,7 @@ assembly-trigger: WRENCH_USE
 persistent: true
 tick-interval: 20
 
-vaiables:
+variables:
   energy: 0
   max_energy: 10000
   smelt_progress: 0
@@ -64,3 +64,10 @@ pattern:
     match: NETHER_BRICKS
   - offset: [1, 2, 2]
     match: NETHER_BRICKS
+
+ports:
+  port_in_1:
+    direction: input
+    type: energy
+    block: [0, 0, 2]
+    capabilities: [accept]

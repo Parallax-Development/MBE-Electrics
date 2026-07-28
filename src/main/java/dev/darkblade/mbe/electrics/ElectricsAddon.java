@@ -59,7 +59,10 @@ public final class ElectricsAddon implements MultiblockAddon {
             context.registerService(dev.darkblade.mbe.electrics.service.ElectricsService.class, electricsService);
             context.getLogger().info("ElectricsService registered");
 
-            dev.darkblade.mbe.electrics.manager.ElectricsManager electricsManager = new dev.darkblade.mbe.electrics.manager.ElectricsManager(electricsService, networkService);
+            dev.darkblade.mbe.api.wiring.PortResolutionService portResolutionService =
+                    context.getService(dev.darkblade.mbe.api.wiring.PortResolutionService.class);
+            dev.darkblade.mbe.electrics.manager.ElectricsManager electricsManager =
+                    new dev.darkblade.mbe.electrics.manager.ElectricsManager(electricsService, networkService, portResolutionService);
             context.registerListener(electricsManager);
 
             dev.darkblade.mbe.api.event.EventBusService eventBus = context.getService(dev.darkblade.mbe.api.event.EventBusService.class);
@@ -75,6 +78,38 @@ public final class ElectricsAddon implements MultiblockAddon {
             itemRegistry.register(new dev.darkblade.mbe.electrics.item.BasicItemDefinition("mbe-electrics:copper_ingot", "§6Copper Ingot", "IRON_INGOT", 100));
             itemRegistry.register(new dev.darkblade.mbe.electrics.item.BasicItemDefinition("mbe-electrics:circuit", "§aCircuit", "REPEATER", 101));
             itemRegistry.register(new dev.darkblade.mbe.electrics.item.BasicItemDefinition("mbe-electrics:casing", "§7Machine Casing", "IRON_BLOCK", 102));
+            itemRegistry.register(new dev.darkblade.mbe.electrics.item.MultimeterItemDefinition());
+        }
+
+        // --- Multimeter Tool ---
+        dev.darkblade.mbe.api.tool.ToolRegistry toolRegistry = context.getService(dev.darkblade.mbe.api.tool.ToolRegistry.class);
+        dev.darkblade.mbe.api.tool.ToolModeRegistry toolModeRegistry = context.getService(dev.darkblade.mbe.api.tool.ToolModeRegistry.class);
+        dev.darkblade.mbe.api.tool.ToolActionRegistry toolActionRegistry = context.getService(dev.darkblade.mbe.api.tool.ToolActionRegistry.class);
+
+        if (toolRegistry != null && toolModeRegistry != null && toolActionRegistry != null) {
+            dev.darkblade.mbe.electrics.tool.MultimeterSessionService sessionService =
+                    new dev.darkblade.mbe.electrics.tool.MultimeterSessionService();
+            context.registerService(dev.darkblade.mbe.electrics.tool.MultimeterSessionService.class, sessionService);
+            context.registerListener(sessionService);
+
+            dev.darkblade.mbe.electrics.tool.InspectMode inspectMode =
+                    new dev.darkblade.mbe.electrics.tool.InspectMode();
+
+            toolRegistry.register(new dev.darkblade.mbe.electrics.tool.MultimeterTool(inspectMode));
+            toolModeRegistry.register(inspectMode);
+
+            dev.darkblade.mbe.api.wiring.NetworkService networkServiceForTool =
+                    context.getService(dev.darkblade.mbe.api.wiring.NetworkService.class);
+            dev.darkblade.mbe.electrics.service.ElectricsService electricsServiceForTool =
+                    context.getService(dev.darkblade.mbe.electrics.service.ElectricsService.class);
+            dev.darkblade.mbe.electrics.renderer.ChatNetworkRenderer chatRenderer =
+                    new dev.darkblade.mbe.electrics.renderer.ChatNetworkRenderer();
+
+            toolActionRegistry.register(new dev.darkblade.mbe.electrics.tool.InspectNetworkAction(
+                    networkServiceForTool, electricsServiceForTool, sessionService, chatRenderer));
+            toolActionRegistry.register(new dev.darkblade.mbe.electrics.tool.ResetSelectionAction(sessionService));
+
+            context.getLogger().info("MultimeterTool registered via ElectricsAddon");
         }
         
         context.getLogger().info("ElectricsAddon enabled");
