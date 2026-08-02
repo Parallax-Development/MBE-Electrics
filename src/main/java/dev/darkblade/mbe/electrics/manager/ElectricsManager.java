@@ -31,8 +31,7 @@ public class ElectricsManager implements Listener {
     public ElectricsManager(
             ElectricsService electricsService,
             dev.darkblade.mbe.api.wiring.NetworkService networkService,
-            PortResolutionService portResolutionService
-    ) {
+            PortResolutionService portResolutionService) {
         this.electricsService = electricsService;
         this.networkService = networkService;
         this.portResolutionService = portResolutionService;
@@ -49,77 +48,70 @@ public class ElectricsManager implements Listener {
     }
 
     public void onMultiblockForm(MultiblockFormEvent event) {
-        String typeId = event.getMultiblock().type().id().toString();
-        if (typeId.equals("mbe-electrics:electric_forge") || typeId.equals("mbe-electrics:coal_generator")) {
-            Location anchor = event.getMultiblock().anchorLocation();
-            if (anchor != null) {
-                if (typeId.equals("mbe-electrics:electric_forge")) {
-                    electricFurnaces.add(anchor);
-                }
-
-                electricsService.registerInstance(anchor, event.getMultiblock());
-
-                Set<dev.darkblade.mbe.api.wiring.Direction> faces = java.util.EnumSet.allOf(dev.darkblade.mbe.api.wiring.Direction.class);
-                dev.darkblade.mbe.api.wiring.NodeDescriptor descriptor = new dev.darkblade.mbe.api.wiring.NodeDescriptor(faces);
-                networkService.registerNode(dev.darkblade.mbe.api.wiring.NetworkType.ENERGY, anchor.getBlock(), descriptor);
-            }
-        }
-
-        // Connect all energy-type ports of this multiblock together (internal bus).
-        // The MultiblockWiringBridge has already registered a node at each port location;
-        // we only need to wire them together so the multimeter (and any traversal) sees
-        // them as a single connected component, regardless of which port has cables.
-        connectInternalPorts(event.getMultiblock());
-    }
-
-    /**
-     * Resolves all energy ports of the given multiblock and connects their network nodes
-     * to each other, modelling the internal bus of the machine.
-     */
-    private void connectInternalPorts(dev.darkblade.mbe.core.domain.MultiblockInstance instance) {
-        if (portResolutionService == null || instance == null) {
+        dev.darkblade.mbe.core.domain.MultiblockInstance instance = event.getMultiblock();
+        if (instance == null || instance.type() == null) {
             return;
         }
 
-        List<NetworkNode> energyPortNodes = new ArrayList<>();
+        String typeId = instance.type().id().toString();
+        Location anchor = instance.anchorLocation();
 
-        for (PortResolutionService.ResolvedPort resolved : portResolutionService.resolveAll(instance)) {
-            PortDefinition def = resolved.definition();
-            Location loc = resolved.location();
-            if (def == null || loc == null || loc.getWorld() == null) {
-                continue;
+        if (typeId.equals("mbe-electrics:electric_forge")) {
+            if (anchor != null) {
+                electricFurnaces.add(anchor);
             }
-            // Only wire energy-type ports together
-            String portType = def.type() == null ? "" : def.type().trim().toLowerCase(Locale.ROOT);
-            if (!portType.equals("energy") && !portType.isEmpty()) {
-                continue;
-            }
-            networkService.findNode(NetworkType.ENERGY, loc.getBlock())
-                    .ifPresent(energyPortNodes::add);
         }
 
-        // Connect every energy port to every other energy port (fully-meshed internal bus)
-        for (int i = 0; i < energyPortNodes.size(); i++) {
-            for (int j = i + 1; j < energyPortNodes.size(); j++) {
-                networkService.connect(NetworkType.ENERGY, energyPortNodes.get(i), energyPortNodes.get(j));
+        if (anchor != null) {
+            electricsService.registerInstance(anchor, instance);
+            if (typeId.equals("mbe-electrics:electric_forge") || typeId.equals("mbe-electrics:coal_generator")) {
+                Set<dev.darkblade.mbe.api.wiring.Direction> faces = java.util.EnumSet
+                        .allOf(dev.darkblade.mbe.api.wiring.Direction.class);
+                dev.darkblade.mbe.api.wiring.NodeDescriptor descriptor = new dev.darkblade.mbe.api.wiring.NodeDescriptor(
+                        faces);
+                networkService.registerNode(dev.darkblade.mbe.api.wiring.NetworkType.ENERGY, anchor.getBlock(),
+                        descriptor);
+            }
+        }
+
+        // Register all port locations in ElectricsService so getInstance(portLoc) works
+        if (portResolutionService != null) {
+            for (PortResolutionService.ResolvedPort resolved : portResolutionService.resolveAll(instance)) {
+                if (resolved.location() != null) {
+                    electricsService.registerInstance(resolved.location(), instance);
+                }
             }
         }
     }
 
     public void onMultiblockBreak(MultiblockBreakEvent event) {
-        String typeId = event.getMultiblock().type().id().toString();
-        if (typeId.equals("mbe-electrics:electric_forge") || typeId.equals("mbe-electrics:coal_generator")) {
-            Location anchor = event.getMultiblock().anchorLocation();
+        dev.darkblade.mbe.core.domain.MultiblockInstance instance = event.getMultiblock();
+        if (instance == null || instance.type() == null) {
+            return;
+        }
+
+        String typeId = instance.type().id().toString();
+        Location anchor = instance.anchorLocation();
+
+        if (typeId.equals("mbe-electrics:electric_forge")) {
             if (anchor != null) {
-                if (typeId.equals("mbe-electrics:electric_forge")) {
-                    electricFurnaces.remove(anchor);
+                electricFurnaces.remove(anchor);
+            }
+        }
+
+        if (anchor != null) {
+            electricsService.unregisterInstance(anchor);
+            networkService.findNode(dev.darkblade.mbe.api.wiring.NetworkType.ENERGY, anchor.getBlock())
+                    .ifPresent(node -> {
+                        networkService.unregisterNode(dev.darkblade.mbe.api.wiring.NetworkType.ENERGY, node);
+                    });
+        }
+
+        if (portResolutionService != null) {
+            for (PortResolutionService.ResolvedPort resolved : portResolutionService.resolveAll(instance)) {
+                if (resolved.location() != null) {
+                    electricsService.unregisterInstance(resolved.location());
                 }
-                
-                electricsService.unregisterInstance(anchor);
-                
-                networkService.findNode(dev.darkblade.mbe.api.wiring.NetworkType.ENERGY, anchor.getBlock()).ifPresent(node -> {
-                    networkService.unregisterNode(dev.darkblade.mbe.api.wiring.NetworkType.ENERGY, node);
-                });
             }
         }
     }

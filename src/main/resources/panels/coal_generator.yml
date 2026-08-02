@@ -1,18 +1,204 @@
 type: inventory
-title: '&8Coal Generator'
-rows: 1
+title: "Generador de Carbón"
+rows: 4
 inventory-lock: true
-items:
-  background:
-    material: GRAY_STAINED_GLASS_PANE
-    name: " "
-  status:
-    material: COAL
-    name: '&aEstado del Generador'
-    lore:
-      - '&7Combustible: &f{{fuel_ticks}} ticks'
 layout:
-  fill:
-    - background
-  4:
-    - status
+  '0':
+  - item_0
+  '1':
+  - item_1
+  '2':
+  - item_2
+  '3':
+  - item_3
+  '4':
+  - item_4
+  '5':
+  - item_5
+  '6':
+  - item_6
+  '7':
+  - item_7
+  '8':
+  - item_8
+  '9':
+  - item_9
+  '10':
+  - item_10
+  '11':
+  - item_11
+  '12':
+  - item_12
+  '13':
+  - item_13
+  '14':
+  - item_14
+  '15':
+  - item_15
+  '16':
+  - item_16
+  '17':
+  - item_17
+  '18':
+  - item_18
+  '19':
+  - item_19
+  '20':
+  - item_20
+  '21':
+  - item_21
+  '22':
+  - item_22
+  '23':
+  - item_23
+  '24':
+  - item_24
+  '25':
+  - item_25
+  '26':
+  - item_26
+  '27':
+  - item_27
+  '28':
+  - item_28
+  '29':
+  - item_29
+  '30':
+  - item_30
+  '31':
+  - item_31
+  '32':
+  - item_32
+  '33':
+  - item_33
+  '34':
+  - item_34
+  '35':
+  - item_35
+items:
+  item_12:
+    type: input
+    material: BARRIER
+    name: "&cSlot de Combustible 1"
+    allowed-materials:
+      - COAL
+      - CHARCOAL
+      - COAL_BLOCK
+  item_13:
+    type: input
+    material: BARRIER
+    name: "&cSlot de Combustible 2"
+    allowed-materials:
+      - COAL
+      - CHARCOAL
+      - COAL_BLOCK
+  item_14:
+    type: input
+    material: BARRIER
+    name: "&cSlot de Combustible 3"
+    allowed-materials:
+      - COAL
+      - CHARCOAL
+      - COAL_BLOCK
+  item_30:
+    material: GRAY_STAINED_GLASS_PANE
+    name: "&f "
+  item_31:
+    material: FLINT_AND_STEEL
+    name: "&a&lEstado del generador"
+    lore:
+      - '&7Energía actual: &e{{energy}} RF'
+      - '&7Combustible: &e{{fuel_ticks}} ticks'
+  item_32:
+    material: GRAY_STAINED_GLASS_PANE
+    name: "&f "
+  item_33:
+    material: GRAY_STAINED_GLASS_PANE
+    name: "&f "
+  item_10:
+    material: GRAY_STAINED_GLASS_PANE
+    name: "&f "
+  item_11:
+    material: GRAY_STAINED_GLASS_PANE
+    name: "&f "
+  item_34:
+    material: GRAY_STAINED_GLASS_PANE
+    name: "&f "
+  item_35:
+    material: GRAY_STAINED_GLASS_PANE
+    name: "&f "
+  item_15:
+    material: GRAY_STAINED_GLASS_PANE
+    name: "&f "
+  item_16:
+    material: GRAY_STAINED_GLASS_PANE
+    name: "&f "
+  item_17:
+    material: GRAY_STAINED_GLASS_PANE
+    name: "&f "
+  item_18:
+    material: GRAY_STAINED_GLASS_PANE
+    name: "&f "
+  item_19:
+    material: GRAY_STAINED_GLASS_PANE
+    name: "&f "
+  item_0:
+    material: GRAY_STAINED_GLASS_PANE
+    name: "&f "
+  item_1:
+    material: GRAY_STAINED_GLASS_PANE
+    name: "&f "
+  item_2:
+    material: GRAY_STAINED_GLASS_PANE
+    name: "&f "
+  item_3:
+    material: GRAY_STAINED_GLASS_PANE
+    name: "&f "
+  item_4:
+    material: GRAY_STAINED_GLASS_PANE
+    name: "&f "
+  item_5:
+    material: GRAY_STAINED_GLASS_PANE
+    name: "&f "
+  item_6:
+    material: GRAY_STAINED_GLASS_PANE
+    name: "&f "
+  item_7:
+    material: GRAY_STAINED_GLASS_PANE
+    name: "&f "
+  item_8:
+    material: GRAY_STAINED_GLASS_PANE
+    name: "&f "
+  item_9:
+    material: GRAY_STAINED_GLASS_PANE
+    name: "&f "
+  item_20:
+    material: GRAY_STAINED_GLASS_PANE
+    name: "&f "
+  item_21:
+    material: CAMPFIRE
+    name: "&eFuego 1"
+  item_22:
+    material: CAMPFIRE
+    name: "&eFuego 2"
+  item_23:
+    material: CAMPFIRE
+    name: "&eFuego 3"
+  item_24:
+    material: GRAY_STAINED_GLASS_PANE
+    name: "&f "
+  item_25:
+    material: GRAY_STAINED_GLASS_PANE
+    name: "&f "
+  item_26:
+    material: GRAY_STAINED_GLASS_PANE
+    name: "&f "
+  item_27:
+    material: GRAY_STAINED_GLASS_PANE
+    name: "&f "
+  item_28:
+    material: GRAY_STAINED_GLASS_PANE
+    name: "&f "
+  item_29:
+    material: GRAY_STAINED_GLASS_PANE
+    name: "&f "

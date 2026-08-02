@@ -24,32 +24,34 @@ public class CoalGeneratorTickAction implements Action {
 
         if (fuelTicks <= 0) {
             org.bukkit.block.Block block = instance.anchorLocation().getBlock();
-            if (block.getState() instanceof org.bukkit.block.Furnace furnace) {
-                org.bukkit.inventory.FurnaceInventory inventory = furnace.getInventory();
-                org.bukkit.inventory.ItemStack fuel = inventory.getFuel();
-                int burnTime = getBurnTime(fuel);
-                
-                if (burnTime > 0) {
-                    if (fuel.getAmount() > 1) {
-                        fuel.setAmount(fuel.getAmount() - 1);
-                    } else {
-                        if (fuel.getType() == org.bukkit.Material.LAVA_BUCKET) {
-                            inventory.setFuel(new org.bukkit.inventory.ItemStack(org.bukkit.Material.BUCKET));
+            if (block.getState() instanceof org.bukkit.inventory.InventoryHolder holder) {
+                org.bukkit.inventory.Inventory inventory = holder.getInventory();
+                int[] candidateSlots = new int[]{12, 13, 14, 1};
+                for (int slot : candidateSlots) {
+                    if (slot < 0 || slot >= inventory.getSize()) continue;
+                    org.bukkit.inventory.ItemStack fuel = inventory.getItem(slot);
+                    int burnTime = getBurnTime(fuel);
+                    if (burnTime > 0) {
+                        if (fuel.getAmount() > 1) {
+                            fuel.setAmount(fuel.getAmount() - 1);
                         } else {
-                            inventory.setFuel(null);
+                            inventory.setItem(slot, null);
                         }
+                        fuelTicks = burnTime;
+                        break;
                     }
-                    fuelTicks = burnTime;
                 }
             }
         }
 
         if (fuelTicks > 0) {
-            // Push energy to the network
             electricsService.pushEnergy(instance.anchorLocation().getBlock(), generationPerTick);
-            
             fuelTicks--;
             instance.setVariable("fuel_ticks", fuelTicks);
+            
+            Object energyObj = instance.getVariable("energy");
+            long currentEnergy = energyObj instanceof Number ? ((Number) energyObj).longValue() : 0L;
+            instance.setVariable("energy", currentEnergy + generationPerTick);
         }
     }
 

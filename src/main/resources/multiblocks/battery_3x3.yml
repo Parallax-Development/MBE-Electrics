@@ -6,7 +6,7 @@ persistent: true
 tick-interval: 20
 variables:
   energy: 0
-controller: TERRACOTTA
+controller: LODESTONE
 pattern:
   - offset: [-1, 0, 0]
     match: TERRACOTTA
@@ -43,23 +43,23 @@ pattern:
   - offset: [1, 1, 2]
     match: TERRACOTTA
   - offset: [-1, 2, 0]
-    match: TERRACOTTA
+    match: "minecraft:polished_granite_stairs[facing=north,half=bottom,shape=inner_left,waterlogged=false]"
   - offset: [-1, 2, 1]
-    match: TERRACOTTA
+    match: "minecraft:polished_granite_stairs[facing=west,half=bottom,shape=straight,waterlogged=false]"
   - offset: [-1, 2, 2]
-    match: TERRACOTTA
+    match: "minecraft:polished_granite_stairs[facing=south,half=bottom,shape=inner_right,waterlogged=false]"
   - offset: [0, 2, 0]
-    match: TERRACOTTA
+    match: "minecraft:polished_granite_stairs[facing=north,half=bottom,shape=straight,waterlogged=false]"
   - offset: [0, 2, 1]
     match: "minecraft:target[power=0]"
   - offset: [0, 2, 2]
-    match: TERRACOTTA
+    match: "minecraft:polished_granite_stairs[facing=south,half=bottom,shape=straight,waterlogged=false]"
   - offset: [1, 2, 0]
-    match: TERRACOTTA
+    match: "minecraft:polished_granite_stairs[facing=north,half=bottom,shape=inner_right,waterlogged=false]"
   - offset: [1, 2, 1]
-    match: TERRACOTTA
+    match: "minecraft:polished_granite_stairs[facing=east,half=bottom,shape=straight,waterlogged=false]"
   - offset: [1, 2, 2]
-    match: TERRACOTTA
+    match: "minecraft:polished_granite_stairs[facing=south,half=bottom,shape=inner_left,waterlogged=false]"
 
 ports:
   port_in_1:

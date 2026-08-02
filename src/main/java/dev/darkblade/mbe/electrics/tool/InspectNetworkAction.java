@@ -286,9 +286,9 @@ public final class InspectNetworkAction implements ToolAction {
             Object energyObj = instance.getVariable("energy");
             Object maxEnergyObj = instance.getVariable("max_energy");
 
-            if (energyObj instanceof Number && maxEnergyObj instanceof Number) {
+            if (energyObj instanceof Number) {
                 long energy = ((Number) energyObj).longValue();
-                long maxEnergy = ((Number) maxEnergyObj).longValue();
+                long maxEnergy = (maxEnergyObj instanceof Number) ? ((Number) maxEnergyObj).longValue() : 0L;
                 result.put(node.id(), new ChatNetworkRenderer.EnergyReading(energy, maxEnergy));
             }
         }
